@@ -123,6 +123,48 @@ def gen_population(list, num):
     return population
 
 def main():
+
+    ##read & transform data
+    f = open("colvar-1D.data", "r")
+    data = []
+    data = [line.split() for line in f]
+    print("numbr of data:", len(data))
+    N = len(data)
+    N = 11
+    data2 = [data[i] for i in range(1, N)]
+    ##print(data2)
+
+    loc = [row[1] for row in data2]
+    loc = [float(i) for i in loc]
+
+    max_lw = -10.0
+    lw = [row[2] for row in data2]
+    lw = [float(i) for i in lw]
+    print("\nlog(weight)column:")
+    print(lw)
+    l = len(lw)
+
+    for i in range(l):
+        if (max_lw < lw[i]):
+            max_lw = lw[i]
+    print("max log(weight):", max_lw)
+
+    for i in range(l):
+        lw[i] -= max_lw
+    print("log(weight)column - max log(weight):")
+    print(lw)
+
+    weight = lw
+    for i in range(l):
+        weight[i] = math.exp(weight[i])
+    print("weight = exp(log(weight)):")
+    print(weight)
+
+    print("location:")
+    print(loc)
+    print("#########")
+
+    ## ---
     cities = [i for i in range(N)]
     print(cities)
 
