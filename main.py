@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 def random_sampling(n_sample, logweight_tensor_, n_landmark):
   t_weight = sum(np.exp(logweight_tensor_))
@@ -15,7 +17,7 @@ def random_sampling(n_sample, logweight_tensor_, n_landmark):
     r = (t_weight - running_t_weight) * r01
 
     for j in range(n_sample):
-      if(selected[j] == False): 
+      if(selected[j] == False):
         tw += np.exp(logweight_tensor_[j])
         if(r < tw):
           selected[j] = True
@@ -40,8 +42,25 @@ def main():
     n_sample = len(X)
     logweight_tensor_ = lw
 
-    ndx = random_sampling(n_sample, logweight_tensor_, 100)
-    print(ndx)
+    plt.hist(X[:, 1], bins=100, alpha=0.5, density=True, label=N);
+    plt.xlim([0, 10])
+    plt.legend(loc='upper right')
+    plt.show();
+
+    for k in range(1, 4):
+        S = 1000 + 20000*k;
+        ndx = random_sampling(n_sample, logweight_tensor_, S)
+        print(ndx)
+        ndx.sort();
+        print(X.shape);
+        A = np.empty(shape=[S, 3]);
+        for i in range(S):
+            A[i] = (X[ndx[i]]);
+        plt.hist(A[:, 1], bins=100, alpha=0.5, density=True, label=S);
+        plt.xlim([0, 10])
+        plt.legend(loc='upper right')
+        plt.show();
+
 
 if __name__ == "__main__":
     main()
