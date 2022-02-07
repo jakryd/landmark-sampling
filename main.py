@@ -15,14 +15,15 @@ def random_sampling(n_sample, logweight_tensor_, n_landmark):
     tw = 0
     r01 = np.random.rand()
     r = (t_weight - running_t_weight) * r01
+    r = np.power(r, 0.2);
 
     for j in range(n_sample):
       if(selected[j] == False):
-        tw += np.exp(logweight_tensor_[j])
+        tw += np.exp(logweight_tensor_[j]);
         if(r < tw):
           selected[j] = True
           landmark_indices.append(j)
-          running_t_weight += np.exp(logweight_tensor_[j])
+          running_t_weight += np.exp(logweight_tensor_[j]);
 
           break
     n_count += 1
@@ -43,20 +44,30 @@ def main():
     logweight_tensor_ = lw
 
     plt.hist(X[:, 1], bins=100, alpha=0.5, density=True, label=N);
+    plt.xlabel('Value')
+    plt.ylabel('Frequency')
+    plt.title('colvar-1D.data')
     plt.xlim([0, 10])
     plt.legend(loc='upper right')
     plt.show();
 
-    for k in range(1, 4):
-        S = 1000 + 20000*k;
+    for k in range(0, 3):
+        S = 10000 + 2000 * k;
         ndx = random_sampling(n_sample, logweight_tensor_, S)
         print(ndx)
         ndx.sort();
         print(X.shape);
         A = np.empty(shape=[S, 3]);
-        for i in range(S):
+        print(len(A))
+        print(S)
+        print(len(ndx))
+        for i in range(len(ndx)):
+            print(i);
             A[i] = (X[ndx[i]]);
         plt.hist(A[:, 1], bins=100, alpha=0.5, density=True, label=S);
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        plt.title('colvar-1D.data')
         plt.xlim([0, 10])
         plt.legend(loc='upper right')
         plt.show();

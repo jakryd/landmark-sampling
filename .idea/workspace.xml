@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e871eaa6-d2d7-470f-be24-94e0b976e71a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/data.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pip-selfcheck.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="41" column="21" lean-forward="true" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+            <state relative-caret-position="425">
+              <caret line="55" column="43" selection-start-line="55" selection-start-column="43" selection-end-line="55" selection-end-column="43" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -39,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/colvar-1D.data">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51050">
-              <caret line="3032" column="30" lean-forward="true" selection-start-line="3032" selection-start-column="1" selection-end-line="3032" selection-end-column="30" />
+            <state relative-caret-position="75800">
+              <caret line="3032" column="30" selection-start-line="3032" selection-start-column="1" selection-end-line="3032" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -97,6 +95,11 @@
             <path>
               <item name="landmark-sampling" type="b2602c69:ProjectViewProjectNode" />
               <item name="landmark-sampling" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="landmark-sampling" type="b2602c69:ProjectViewProjectNode" />
+              <item name="landmark-sampling" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -161,12 +164,12 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.079557426" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.079557426" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1971831" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2654388" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -200,6 +203,13 @@
     </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/colvar-1D.data">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75800">
+          <caret line="3032" column="30" selection-start-line="3032" selection-start-column="1" selection-end-line="3032" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/data.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
@@ -207,17 +217,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/colvar-1D.data">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51050">
-          <caret line="3032" column="30" lean-forward="true" selection-start-line="3032" selection-start-column="1" selection-end-line="3032" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="41" column="21" lean-forward="true" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+        <state relative-caret-position="425">
+          <caret line="55" column="43" selection-start-line="55" selection-start-column="43" selection-end-line="55" selection-end-column="43" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
