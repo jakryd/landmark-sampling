@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 
 def random_sampling(n_sample, logweight_tensor_, n_landmark):
   t_weight = sum(np.exp(logweight_tensor_))
+  print(t_weight)
+  t_weight = np.power(t_weight, 0.0001);
+
   running_t_weight = 0
 
   landmark_indices = []
@@ -15,7 +18,6 @@ def random_sampling(n_sample, logweight_tensor_, n_landmark):
     tw = 0
     r01 = np.random.rand()
     r = (t_weight - running_t_weight) * r01
-    r = np.power(r, 0.2);
 
     for j in range(n_sample):
       if(selected[j] == False):
@@ -31,18 +33,25 @@ def random_sampling(n_sample, logweight_tensor_, n_landmark):
   return landmark_indices
 
 def main():
-    X = np.loadtxt("colvar-1D.data")
+    # X = np.loadtxt("colvar-1D.data")
+    # N = len(X)
+    # loc = [row[1] for row in X]
+    # lw = [row[2] for row in X]
+
+    XX = np.loadtxt("colvar-2D.data")
+    X = XX[:, [2, 3, 51]]  # phi, psi, mtd.rbias
     N = len(X)
-    loc = [row[1] for row in X]
     lw = [row[2] for row in X]
+
 
     ##data2 = [X[i] for i in range(1, 10)]
     ##loc = [row[1] for row in data2]
     ##lw = [row[2] for row in data2]
 
     n_sample = len(X)
+    print("num: ", n_sample, "\n")
     logweight_tensor_ = lw
-
+    print(logweight_tensor_)
     plt.hist(X[:, 1], bins=100, alpha=0.5, density=True, label=N);
     plt.xlabel('Value')
     plt.ylabel('Frequency')
@@ -51,10 +60,10 @@ def main():
     plt.legend(loc='upper right')
     plt.show();
 
-    for k in range(0, 3):
-        S = 10000 + 2000 * k;
+    for k in range(1, 3):
+        S = 100 * k
         ndx = random_sampling(n_sample, logweight_tensor_, S)
-        print(ndx)
+        print("--",ndx)
         ndx.sort();
         print(X.shape);
         A = np.empty(shape=[S, 3]);
