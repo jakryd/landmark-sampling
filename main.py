@@ -2,12 +2,10 @@ import sys
 import math
 from math import log
 import numpy as np
-from random import sample
 import matplotlib.pyplot as plt
 from scipy.spatial import Voronoi, voronoi_plot_2d
 from sklearn.cluster import DBSCAN, KMeans
 from scipy.spatial.distance import pdist, squareform
-from scipy.spatial.distance import cdist
 import pylab as pl
 
 # as a parameter 1 == 1D data, 2 = 2D data etc.
@@ -81,29 +79,6 @@ def scatter_2d_data(X):
     # plt.savefig('outputs/3.png')
     plt.show()
 
-# def scatter_4x4(X, A):
-#     w = normalize_wages(X)
-#     w1 = normalize_wages(A)
-#     f, axes = plt.subplots(nrows=2, ncols=2, sharex=True, sharey=True)
-#     sc = axes[0][0].scatter(X[:, 1], X[:, 2], c=w, marker="x")
-#     axes[0][0].set_xlabel('x', labelpad=5)
-#
-#     axes[0][1].scatter(X[:, 1], X[:, 2], c=w, marker='o')
-#     axes[0][1].set_xlabel('o', labelpad=5)
-#
-#     axes[1][0].scatter(A[:, 1], A[:, 2], c=w1, marker='*')
-#     axes[1][0].set_xlabel('*')
-#
-#     axes[1][1].scatter(A[:, 1], A[:, 2], c=w1)
-#     axes[1][1].set_xlabel('.')
-#
-#     # cbar_ax = f.add_axes([0.85, 0.15, 0.05, 0.7])
-#     # f.colorbar(sc, cax=cbar_ax)
-#     f.colorbar(sc)
-#
-#     # plt.savefig('outputs/2.png')
-#     plt.show()
-
 def plot_voronoi_diagram(X):
     vor = Voronoi(X[:, [1, 2]])
     fig, ax = plt.subplots(figsize=(100, 100))
@@ -134,6 +109,8 @@ def get_sin_cos(X):
     return per_X
 
 def k_means_stara_wersja(X, N_clusters):
+    # plt.scatter(X[:, 1], X[:, 2])
+
     # class sklearn.cluster.KMeans(n_clusters=8, *, init='k-means++',
     # n_init=10, max_iter=300, tol=0.0001, verbose=0, random_state=None, copy_x=True, algorithm='auto')
     km = KMeans(n_clusters=N_clusters)
@@ -143,16 +120,25 @@ def k_means_stara_wersja(X, N_clusters):
     ## stara wersja
     y_pred = km.fit_predict(X[:, 1:3])
     new_X = np.c_[X, y_pred]
-    w = normalize_wages(X)
-    new_X[:, 3] = w  # normalized weights
+    # w = normalize_wages(X)
+    # new_X[:, 3] = w  # normalized weights
+
 
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.set_title('K-means clusterization ({} clusters) - 2D dataset'.format(N_clusters))
     ax.set_xlabel('phi')
     ax.set_ylabel('psi')
-    plt.scatter(new_X[:, 1], new_X[:, 2], c=new_X[:, 4])
-    plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1], color='red', marker='*', s=100)
-    # plt.savefig('outputs/6.png')
+    # plt.scatter(new_X[:, 1], new_X[:, 2], c=new_X[:, 4])
+    # plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1], color='red', marker='*', s=100)
+    # # plt.savefig('outputs/6.png')
+    # plt.show()
+
+    u_labels = np.unique(new_X[:,4])
+    for i in u_labels:
+        plt.scatter(new_X[new_X[:,4] == i, 1], new_X[new_X[:,4] == i, 2], label=int(i))
+        # plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1], color='black', marker='*', s=100)
+        plt.annotate(int(i), km.cluster_centers_[int(i)], horizontalalignment='center', verticalalignment='center', size=16, weight='bold')
+    # plt.legend()
     plt.show()
 
     ## dodatkowy diagram
@@ -192,18 +178,16 @@ def get_centroids(X, labels, K):
 
 def k_means_per_and_nonper(X, K=5):
     L = math.pi * 2
-    # K = 5
-    km = KMeans(n_clusters=K).fit(X)
-    plt.scatter(X[:, 0], X[:, 1], c=km.labels_, s=100)
+    km = KMeans(n_clusters=K).fit(X[:, 1:3])
+    plt.scatter(X[:, 1], X[:, 2], c=km.labels_, s=100)
     # plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1], s=100, color='red', marker='*')
     plt.figure(figsize=(10, 10))
     plt.title('KMeans bez uwzględnienia periodyczności danych')
     plt.xlabel('phi')
     plt.ylabel('psi')
 
-    param = 2
     #find the correct distance matrix
-    for d in range(param):
+    for d in range(1,3):
         # all 1-d distances
         pd = pdist(X[:, d].reshape(len(X), 1))
         pd[pd > L * 0.5] -= L
@@ -217,26 +201,27 @@ def k_means_per_and_nonper(X, K=5):
     # ...into a square distance matrix
     square = squareform(total)
     km2 = KMeans(n_clusters=K).fit(square)
-    plt.scatter(X[:, 0], X[:, 1], c=km2.labels_, s=100)
+    y_pred = km2.fit_predict(square)
+    new_X = np.c_[X, y_pred]
+    plt.scatter(X[:, 1], X[:, 2], c=km2.labels_, s=100)
     # centroids = get_centroids(X, km2.labels_, K)
     # plt.scatter(centroids[:, 0], centroids[:, 1], s=100, color='red', marker='*')
     plt.title('KMeans z uwzględnieniem periodyczności danych')
     plt.xlabel('phi')
     plt.ylabel('psi')
     plt.show()
+    return new_X, km
 
-def dbscan_per_and_nonper(X):
+def dbscan_per_and_nonper(X, threshold = 0.3):
     L = math.pi * 2
-    threshold = 0.3
-    db = DBSCAN(eps=threshold).fit(X)
-    plt.scatter(X[:, 0], X[:, 1], c=db.labels_, s=100)
+    db = DBSCAN(eps=threshold).fit(X[:, 1:3])
+    plt.scatter(X[:, 1], X[:, 2], c=db.labels_, s=100)
     plt.figure(figsize=(10, 10))
     plt.title('DBSCAN bez uwzględnienia periodyczności danych')
     plt.xlabel('phi')
     plt.ylabel('psi')
 
-    param = 2
-    for d in range(param):
+    for d in range(1,3):
         # all 1-d distances
         pd = pdist(X[:, d].reshape(len(X), 1))
         pd[pd > L * 0.5] -= L
@@ -250,7 +235,7 @@ def dbscan_per_and_nonper(X):
     # ...into a square distance matrix
     square = squareform(total)
     db2 = DBSCAN(eps=threshold, metric='precomputed').fit(square)
-    plt.scatter(X[:, 0], X[:, 1], c=db2.labels_, s=100)
+    plt.scatter(X[:, 1], X[:, 2], c=db2.labels_, s=100)
     plt.title('DBSCAN z uwzględnieniem periodyczności danych')
     plt.xlabel('phi')
     plt.ylabel('psi')
@@ -272,9 +257,9 @@ def plot_voronoi_for_clusters(new_X, km):
 
 # modified roulette selection //++ t_weight = np.power(t_weight, 0.0001);
 def sample_clusters(n_sample, weights, n_landmark):
-  t_weight = sum(weights)
-  print(t_weight)
-  #t_weight = np.power(t_weight, 0.0001);
+  t_weight = sum(np.exp(weights))
+  # print(t_weight)
+  t_weight = np.power(t_weight, 0.0001);
 
   running_t_weight = 0
   landmark_indices = []
@@ -297,36 +282,7 @@ def sample_clusters(n_sample, weights, n_landmark):
     n_count += 1
   return landmark_indices
 
-def sample_inside_cluster(new_X, N_clusters, sum_of_clust, S, SS):
-    selected_points = np.full((len(new_X)), False, dtype=bool)
-    indexes = []
-    n_sample = N_clusters
-    ##S = 20
-    clust_ndx = sample_clusters(n_sample, sum_of_clust, S)
-    print("\npicked clusters: (indexes) ", clust_ndx, "\n")
-    for i in range(S):
-        print("cluster index: ", clust_ndx[i])
-        clust_points = new_X[np.where(new_X[:, 4] == clust_ndx[i])]
-        print("number of points in this cluster: ", len(clust_points))
-
-        n_sample = len(clust_points)
-        print("n_sample: ", n_sample)
-        logweight_tensor_ = clust_points[:, 2].tolist()
-        print(type(logweight_tensor_))
-        print("logweight_tensor_: ", logweight_tensor_)
-        ##SS = 2000
-        ndx = random_sampling2(n_sample, logweight_tensor_, SS, clust_points)
-        indexes.extend(ndx)
-        print("ndx (picked points from this cluster): ", ndx)
-        print(len(ndx), "\n")
-
-    print("\nall sampled points: ", indexes)
-    print("number of points: ", len(indexes))
-    indexes.sort()
-    print("\nall sampled points sorted", indexes)
-    return indexes
-
-def random_sampling2(n_sample, logweight_tensor_, n_landmark, clust_points):
+def sample_points(n_sample, logweight_tensor_, n_landmark, clust_points):
   t_weight = sum(np.exp(logweight_tensor_))
   print(t_weight)
   # t_weight = np.power(t_weight, 0.0001);
@@ -351,6 +307,41 @@ def random_sampling2(n_sample, logweight_tensor_, n_landmark, clust_points):
           break
     n_count += 1
   return landmark_indices
+
+def sample_inside_clusters(new_X, N_clusters, sum_of_clust, pick_n_clusters, pick_n_samples):
+    selected_points = np.full((len(new_X)), False, dtype=bool)
+    print(len(selected_points))
+    indexes = []
+    n_sample = N_clusters
+    sampled_clust_ndx = sample_clusters(n_sample, sum_of_clust, pick_n_clusters)
+    print("\npicked clusters: (indexes) ", sampled_clust_ndx, "\n")
+    show_picked_clust(new_X, sampled_clust_ndx)
+
+    for i in range(pick_n_clusters):
+        print("cluster index: ", sampled_clust_ndx[i])
+        clust_points = new_X[np.where(new_X[:, 4] == sampled_clust_ndx[i])]
+        print("number of points in this cluster: ", len(clust_points))
+
+        n_sample = len(clust_points)
+        print("n_sample: ", n_sample)
+        logweight_tensor_ = clust_points[:, 2].tolist()
+        print(type(logweight_tensor_))
+        print("logweight_tensor_: ", logweight_tensor_)
+        ndx = sample_points(n_sample, logweight_tensor_, pick_n_samples, clust_points)
+        indexes.extend(ndx)
+        print("ndx (picked points from this cluster): ", ndx)
+        print(len(ndx), "\n")
+
+    print("\nall sampled points: ", indexes)
+    print("number of points: ", len(indexes))
+    indexes.sort()
+    print("\nall sampled points sorted", indexes)
+
+    sampled_X = np.empty((0, 5), float)
+    for i in indexes:
+        sampled_X = np.vstack((sampled_X, new_X[new_X[:, 0] == i]))
+
+    return sampled_X, indexes
 
 def plot_hist_2D(new_X):
 
@@ -420,18 +411,45 @@ def calc_KL_for_many_sets(X):
     #     #     sizeA[i] /= max_val
     #     # print(sizeA)
     # print(KL)
-    plt.title('Rozbieżność między całym zbiorem X a jego próbką A (dywergencja Kullbacka-Leiblera)')
-    plt.xlabel('Wielkość danych A')
-    plt.ylabel('KL(X || A)')
     plt.plot(sizeA, KL)
     plt.show()
 
+def sum_wages_in_custers(X, N_clusters):
+    sum_of_clust = np.zeros(N_clusters)
+    for i in range(len(X)):
+        temp = int(X[i, 4])
+        sum_of_clust[temp] += X[i, 3]
+    return sum_of_clust
+
+def show_picked_clust(new_X,sampled_clust_ndx):
+    fig, ax = plt.subplots(figsize=(10, 10))
+    ax.set_title('Picked clusters - 2D dataset')
+    ax.set_xlabel('phi')
+    ax.set_ylabel('psi')
+    for i in sampled_clust_ndx:
+        j = i * 1.0
+        plt.scatter(new_X[new_X[:, 4] == j, 1], new_X[new_X[:, 4] == j, 2], label=int(j))
+        # plt.annotate(int(j), km.cluster_centers_[int(j)], horizontalalignment='center', verticalalignment='center', size=16, weight='bold')
+    plt.show()
+
+def overlay_plots(X, sampled_X):
+    fig, ax = plt.subplots(figsize=(10, 10))
+    ax.set_title('Whole set (blue) vs sampled set (red)')
+    ax.set_xlabel('phi')
+    ax.set_ylabel('psi')
+    plt.scatter(X[:, 1], X[:, 2], c='b', alpha=0.1)
+    plt.scatter(sampled_X[:, 1], sampled_X[:, 2], c='r', alpha=1)
+    plt.show()
 
 def main(argv):
     if(sys.argv[1] == '1'):
         X = read_data(1)
+    #argv: dane 2D, n_klastrow, ile klastrow, ile punktów; wykresy:
     elif(sys.argv[1] == '2'):
         X = read_data(2)
+        N_clusters = int(sys.argv[2]) #10
+        pick_n_clusters = int(sys.argv[3]) #6
+        pick_n_samples = int(sys.argv[4]) #30
 
         A = get_rand_sample(X, 1000)
         sortedA = sort_arr_by_index(A)
@@ -442,41 +460,26 @@ def main(argv):
         # -- KMEANS --
         # k_means_elbow(sortedA, 30)
         # X_per = get_sin_cos(A)
-        AA = A[:, [1, 2]] #TODO
-        k_means_per_and_nonper(AA, 5)
-        # dbscan_per_and_nonper(AA)
-
+        new_X, km = k_means_per_and_nonper(A, pick_n_clusters)
+        # dbscan_per_and_nonper(A, 0.2)
 
         # stara wersja kmeans
-        N_clusters = 10
-        new_X, km = k_means_stara_wersja(X, N_clusters)  ##new_X [index, phi, psi, mtd.rbias, klaster]
+        # new_X, km = k_means_stara_wersja(A, N_clusters)  ##new_X [index, phi, psi, mtd.rbias, klaster]
+        sum_of_clust = sum_wages_in_custers(new_X, N_clusters)
 
-        sum_of_clust = np.zeros(N_clusters)
-        for i in range(len(new_X)):
-            temp = int(new_X[i, 4])
-            sum_of_clust[temp] += new_X[i, 3]
+        # -- SAMPLING --
+        # sampled_clust_ndx = sample_clusters(N_clusters, sum_of_clust, pick_n_clusters)
+        # show_picked_clust(new_X,km,sampled_clust_ndx)
+        ## sampling inside clusters
+        sampled_X, indexes = sample_inside_clusters(new_X, N_clusters, sum_of_clust, pick_n_clusters, pick_n_samples)  # 7 clusters, 1500 samples
 
-        ## picking clasters
-        n_sample = N_clusters
-        S = 20
-        # clust_ndx = sample_clusters(n_sample, sum_of_clust, S)
-        # print(clust_ndx)
-
-        ## sampling inside a cluster
-        indexes = sample_inside_cluster(new_X, N_clusters, sum_of_clust, 7, 1500)  # 7 clusters, 1500 samples
-
+        # -- HISTOGRAMS --
         plot_hist_2D(new_X)
-        print(len(indexes))
-        print(indexes)
-
-        sampled_X = np.empty((0, 5), float)
-        for i in indexes:
-            sampled_X = np.vstack((sampled_X, new_X[int(i)]))
         plot_hist_2D(sampled_X)
-
+        overlay_plots(new_X, sampled_X)
 
         #####
-        calc_KL_for_many_sets(X)
+        # calc_KL_for_many_sets(X)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
