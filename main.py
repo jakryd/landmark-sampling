@@ -34,7 +34,7 @@ def sort_arr_by_index(X):
 def random_sampling(n_sample, logweight_tensor_, n_landmark):
   t_weight = sum(np.exp(logweight_tensor_))
   print(t_weight)
-  # t_weight = np.power(t_weight, 0.0001);
+  t_weight = np.power(t_weight, 0.0001);
 
   running_t_weight = 0
   landmark_indices = []
@@ -178,13 +178,13 @@ def get_centroids(X, labels, K):
 
 def k_means_per_and_nonper(X, K=5):
     L = math.pi * 2
-    km = KMeans(n_clusters=K).fit(X[:, 1:3])
-    plt.scatter(X[:, 1], X[:, 2], c=km.labels_, s=100)
-    # plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1], s=100, color='red', marker='*')
-    plt.figure(figsize=(10, 10))
-    plt.title('KMeans bez uwzględnienia periodyczności danych')
-    plt.xlabel('phi')
-    plt.ylabel('psi')
+    # km = KMeans(n_clusters=K).fit(X[:, 1:3])
+    # plt.scatter(X[:, 1], X[:, 2], c=km.labels_, s=100)
+    # # plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1], s=100, color='red', marker='*')
+    # plt.figure(figsize=(10, 10))
+    # plt.title('KMeans bez uwzględnienia periodyczności danych')
+    # plt.xlabel('phi')
+    # plt.ylabel('psi')
 
     #find the correct distance matrix
     for d in range(1,3):
@@ -210,7 +210,7 @@ def k_means_per_and_nonper(X, K=5):
     plt.xlabel('phi')
     plt.ylabel('psi')
     plt.show()
-    return new_X, km
+    return new_X, km2
 
 def dbscan_per_and_nonper(X, threshold = 0.3):
     L = math.pi * 2
@@ -313,6 +313,7 @@ def sample_inside_clusters(new_X, N_clusters, sum_of_clust, pick_n_clusters, pic
     print(len(selected_points))
     indexes = []
     n_sample = N_clusters
+    print((n_sample, sum_of_clust, pick_n_clusters))
     sampled_clust_ndx = sample_clusters(n_sample, sum_of_clust, pick_n_clusters)
     print("\npicked clusters: (indexes) ", sampled_clust_ndx, "\n")
     show_picked_clust(new_X, sampled_clust_ndx)
@@ -414,6 +415,34 @@ def calc_KL_for_many_sets(X):
     plt.plot(sizeA, KL)
     plt.show()
 
+def calc_KL_for_one_set(X, A):
+    H, xedges, yedges = np.histogram2d(X[:, 1], X[:, 2], bins=(100, 100))
+    H = H.T
+    H = H/max(map(max, H))
+    figure = plt.figure(figsize=(10, 10))
+    axes = figure.add_subplot(111)
+    axes.set_title('Histogram of sampled data ({}) - 2D dataset'.format(len(X)))
+    caxes = axes.matshow(H, interpolation='nearest')
+    figure.colorbar(caxes)
+    plt.show()
+
+
+    H2, xedges, yedges = np.histogram2d(A[:, 1], A[:, 2], bins=(100, 100))
+    H2 = H2.T
+    H2 = H2 / max(map(max, H2))
+    figure = plt.figure(figsize=(10, 10))
+    axes = figure.add_subplot(111)
+    axes.set_title('Histogram of sampled data ({}) - 2D dataset'.format(len(A)))
+    c2axes = axes.matshow(H2, interpolation='nearest')
+    figure.colorbar(c2axes)
+    plt.show()
+
+    # (X || A)
+    kl = kl_divergence(H, H2)
+    print('KL(X || A=', len(A), '):', kl)
+
+    return kl
+
 def sum_wages_in_custers(X, N_clusters):
     sum_of_clust = np.zeros(N_clusters)
     for i in range(len(X)):
@@ -441,42 +470,132 @@ def overlay_plots(X, sampled_X):
     plt.scatter(sampled_X[:, 1], sampled_X[:, 2], c='r', alpha=1)
     plt.show()
 
+def kl_divergence_1D(HX, HA):
+    epsilon = 0.0001
+    X = HX + epsilon
+    A = HA + epsilon
+
+    s = 0
+    d = []
+    for i in range(len(X)):
+        temp = X[i] * log(X[i]/A[i])
+        d.append(temp)
+        s += temp
+    print(d)
+    print(sum(d))
+    import matplotlib.pyplot as plt
+    plt.plot(d)
+    # plt.show()
+    return s
+
+def calc_KL_for_one_1Dset(X, A):
+    H, bins = np.histogram(X[:, 1], bins=10)
+    print(H)
+    H = H / H.max()
+    print(len(X))
+    print(min(X[:, 1]))
+    print(max(X[:, 1]))
+
+    H2, bins = np.histogram(A[:, 1], bins=10)
+    H2 = H2/H2.max()
+    print(H2)
+    print(len(A))
+    print(min(A[:, 1]))
+    print(max(A[:, 1]))
+    print()
+    print()
+
+    # (X || A)
+    kl = kl_divergence_1D(H, H2)
+    print('KL(X || A=', len(A), '):', kl)
+    return kl
+
 def main(argv):
+    sizeA = []
+    KL = []
     if(sys.argv[1] == '1'):
         X = read_data(1)
+        plt.hist(X[:, 1], bins=100, alpha=0.5, density=True, label=len(X));
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        plt.title('colvar-1D.data')
+        plt.xlim([0, 10])
+        plt.legend(loc='upper right')
+        plt.show();
+
+        # A = get_rand_sample(X,1000)
+        # kl = calc_KL_for_one_1Dset(X,A)
+
+        for k in range(1, 6, 2):
+            pick_n_samples = 1000 * k
+            ndx = random_sampling(len(X), X[:,2], pick_n_samples)
+            print("--",ndx)
+            ndx.sort();
+            A = np.empty(shape=[pick_n_samples, 3]);
+            for i in range(len(ndx)):
+                A[i] = (X[ndx[i]]);
+            plt.hist(A[:, 1], bins=100, alpha=0.5, density=True, label=pick_n_samples);
+            plt.xlabel('Value')
+            plt.ylabel('Frequency')
+            plt.title('colvar-1D.data')
+            plt.xlim([0, 10])
+            plt.legend(loc='upper right')
+            plt.show();
+
+            kl = calc_KL_for_one_1Dset(X, A)
+            sizeA.append(len(A))
+            KL.append(kl)
+
+        sizeA.append(len(X))
+        KL.append(0.0)
+        plt.plot(sizeA, KL)
+        plt.show()
+
     #argv: dane 2D, n_klastrow, ile klastrow, ile punktów; wykresy:
     elif(sys.argv[1] == '2'):
         X = read_data(2)
-        N_clusters = int(sys.argv[2]) #10
-        pick_n_clusters = int(sys.argv[3]) #6
-        pick_n_samples = int(sys.argv[4]) #30
+        N_clusters = 15# int(sys.argv[2]) #10
+        pick_n_clusters = 15 #int(sys.argv[3]) #6
+        pick_n_samples = 30 #int(sys.argv[4]) #30
 
-        A = get_rand_sample(X, 1000)
-        sortedA = sort_arr_by_index(A)
+        A = get_rand_sample(X, 5000)
         # scatter_2d_data(X)
         # scatter_2d_data(sortedA)
         # plot_voronoi_diagram(A)
 
         # -- KMEANS --
         # k_means_elbow(sortedA, 30)
-        # X_per = get_sin_cos(A)
-        new_X, km = k_means_per_and_nonper(A, pick_n_clusters)
+        new_X, km = k_means_per_and_nonper(A, N_clusters)
+        l = list(range(0, N_clusters))
+        show_picked_clust(new_X, l)
         # dbscan_per_and_nonper(A, 0.2)
-
         # stara wersja kmeans
         # new_X, km = k_means_stara_wersja(A, N_clusters)  ##new_X [index, phi, psi, mtd.rbias, klaster]
         sum_of_clust = sum_wages_in_custers(new_X, N_clusters)
+        print(sum_of_clust)
 
-        # -- SAMPLING --
-        # sampled_clust_ndx = sample_clusters(N_clusters, sum_of_clust, pick_n_clusters)
-        # show_picked_clust(new_X,km,sampled_clust_ndx)
-        ## sampling inside clusters
-        sampled_X, indexes = sample_inside_clusters(new_X, N_clusters, sum_of_clust, pick_n_clusters, pick_n_samples)  # 7 clusters, 1500 samples
+        for i in range(1,6,2):
+            pick_n_samples = pick_n_samples * i
 
-        # -- HISTOGRAMS --
-        plot_hist_2D(new_X)
-        plot_hist_2D(sampled_X)
-        overlay_plots(new_X, sampled_X)
+            # -- SAMPLING --
+            # sampled_clust_ndx = sample_clusters(N_clusters, sum_of_clust, pick_n_clusters)
+            # show_picked_clust(new_X,km,sampled_clust_ndx)
+            ## sampling inside clusters
+            sampled_X, indexes = sample_inside_clusters(new_X, N_clusters, sum_of_clust, pick_n_clusters, pick_n_samples)  # 7 clusters, 1500 samples
+
+            # -- HISTOGRAMS --
+            # plot_hist_2D(new_X)
+            # plot_hist_2D(sampled_X)
+            # overlay_plots(new_X, sampled_X)
+
+            kl = calc_KL_for_one_set(A, sampled_X)
+            sizeA.append(len(sampled_X))
+            KL.append(kl)
+
+        sizeA.append(len(new_X))
+        KL.append(0.0)
+        plt.plot(sizeA, KL)
+        plt.show()
 
         #####
         # calc_KL_for_many_sets(X)
