@@ -30,6 +30,7 @@ def get_rand_sample(X, size):
 def sort_arr_by_index(X):
     return X[X[:, 0].argsort()]
 
+
 # modified roulette selection //++ t_weight = np.power(t_weight, 0.0001);
 def random_sampling(n_sample, logweight_tensor_, n_landmark):
   t_weight = sum(np.exp(logweight_tensor_))
