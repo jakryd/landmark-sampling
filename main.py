@@ -34,15 +34,15 @@ def get_rand_sample(X, size):
     for i in indexes:
         sampled_X = np.vstack((sampled_X, X[X[:, 0] == i]))
     return sampled_X
-    # return X[np.random.randint(X.shape[0], size=size), :]
 
 def sort_arr_by_index(X):
     return X[X[:, 0].argsort()]
 
 # modified roulette selection //++ t_weight = np.power(t_weight, 0.0001)
-def random_sampling(n_sample, logweight_tensor, n_landmark, opt):
+def roulette_selection(n_sample, logweight_tensor, n_landmark, opt, clust_points):
+    temp = np.size(clust_points)
+
     t_weight = sum(np.exp(logweight_tensor))
-    print(t_weight)
     t_weight = np.power(t_weight, opt)
 
     running_t_weight = 0
@@ -50,7 +50,6 @@ def random_sampling(n_sample, logweight_tensor, n_landmark, opt):
     selected = np.full(n_sample, False, dtype=bool)
 
     n_count = 0
-
     while(n_count < n_landmark):
         tw = 0
         r01 = np.random.rand()
@@ -61,7 +60,10 @@ def random_sampling(n_sample, logweight_tensor, n_landmark, opt):
                 tw += np.exp(logweight_tensor[j])
                 if r < tw:
                     selected[j] = True
-                    landmark_indices.append(j)
+                    if temp:
+                        landmark_indices.append(clust_points[j, 0])
+                    else:
+                        landmark_indices.append(j)
                     running_t_weight += np.exp(logweight_tensor[j])
                     break
         n_count += 1
@@ -97,38 +99,10 @@ def plot_voronoi_diagram(X):
     voronoi_plot_2d(vor, ax, show_vertices=False, line_colors='orange', line_width=2, line_alpha=0.6, point_size=2, s=100)
     plt.show()
 
-def get_sin_cos(X):
-    # X[index, phi, psi, mtd.rbias]
-    sinphi, cosphi, sinpsi, cospsi = ([] for i in range(4))
-
-    for c in range(len(X)):
-        sinphi.append(math.sin(X[c, 1]))
-        cosphi.append(math.cos(X[c, 1]))
-
-        sinpsi.append(math.sin(X[c, 2]))
-        cospsi.append(math.cos(X[c, 2]))
-
-    # per_X[index,  sin phi, cos phi, sin psi, cos psi, mtd.rbias]
-    per_X = np.c_[X[:, 0], sinphi, cosphi, sinpsi, cospsi, X[:, 3]]
-    print(X[1])
-    print(per_X[1])
-    return per_X
-
 def k_means_stara_wersja(X, n_clusters):
-    # plt.scatter(X[:, 1], X[:, 2])
-
-    # class sklearn.cluster.KMeans(n_clusters=8, *, init='k-means++',
-    # n_init=10, max_iter=300, tol=0.0001, verbose=0, random_state=None, copy_x=True, algorithm='auto')
     km = KMeans(n_clusters=n_clusters)
-
-    ##nowa wersja - zamiast phi psi to sinphi, cosphi, sinpsi, cospsi
-
-    ## stara wersja
     y_pred = km.fit_predict(X[:, 1:3])
     new_X = np.c_[X, y_pred]
-    # w = normalize_wages(X)
-    # new_X[:, 3] = w  # normalized weights
-
 
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.set_title('K-means clusterization ({} clusters) - 2D dataset'.format(n_clusters))
@@ -147,12 +121,9 @@ def k_means_stara_wersja(X, n_clusters):
     # plt.legend()
     plt.show()
 
-    ## dodatkowy diagram
-    # plot_voronoi_for_clusters(new_X, km)
-    # print(km.get_params())
     return new_X, km
 
-def k_means_elbow(X,r=30):
+def plot_k_means_elbow(X, path, r=30):
     distortions = []
     K = range(1, r)
     for k in K:
@@ -160,10 +131,16 @@ def k_means_elbow(X,r=30):
         km.fit(X[:, 1:3])
         distortions.append(km.inertia_)
 
+    plt.figure(figsize=(10, 6))
     plt.plot(K, distortions, 'bx-')
-    plt.title('Optymalna liczba klastrów - Metoda Elbow')
-    plt.xlabel('Liczba klastrów')
-    plt.ylabel('Within Cluster Sum of Squares (WCSS)')
+
+    plt.title('Metoda elbow', fontsize=16)
+    plt.xlabel('Liczba klastrów', fontsize=14)
+    plt.xticks(fontsize=12)
+    plt.ylabel('Wartość funkcji kosztu', fontsize=14)
+    plt.yticks(fontsize=12)
+
+    plt.savefig(path + "/(" + time.strftime("%d-%m-%Y %H-%M-%S") + ")_elbow" + ".pdf")
     plt.show()
 
 def get_centroids(X, labels, K):
@@ -182,16 +159,8 @@ def get_centroids(X, labels, K):
         temp = []
     return np.array(centroids)
 
-def k_means_per_and_nonper(X, K=5, figures=""):
+def k_means_for_periodic_data(X, path, K=5, figures=""):
     L = math.pi * 2
-    # km = KMeans(n_clusters=K).fit(X[:, 1:3])
-    # plt.scatter(X[:, 1], X[:, 2], c=km.labels_, s=100)
-    # # plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1], s=100, color='red', marker='*')
-    # plt.figure(figsize=(10, 10))
-    # plt.title('KMeans bez uwzględnienia periodyczności danych')
-    # plt.xlabel('phi')
-    # plt.ylabel('psi')
-
     #find the correct distance matrix
     for d in range(1, 3):
         # all 1-d distances
@@ -201,23 +170,56 @@ def k_means_per_and_nonper(X, K=5, figures=""):
             total += pd ** 2
         except:
             total = pd ** 2
-
-    # transform the condensed distance matrix...
+    # transform the condensed distance matrix...into a square distance matrix
     total = pl.sqrt(total)
-    # ...into a square distance matrix
     square = squareform(total)
+
     km2 = KMeans(n_clusters=K).fit(square)
     y_pred = km2.fit_predict(square)
     new_X = np.c_[X, y_pred]
+
+    plt.figure(figsize=(8, 8))
     plt.scatter(X[:, 1], X[:, 2], c=km2.labels_, s=50)
-    # centroids = get_centroids(X, km2.labels_, K)
-    # plt.scatter(centroids[:, 0], centroids[:, 1], s=100, color='red', marker='*')
-    plt.title('KMeans z uwzględnieniem periodyczności danych')
-    plt.xlabel('phi')
-    plt.ylabel('psi')
+
+    plt.title('Klasteryzacja k-średnich dla k = {}'.format(K), fontsize=16)
+    plt.xlabel('phi', fontsize=14)
+    plt.ylabel('psi', fontsize=14)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+
     if figures == 'y':
+        plt.savefig(path + "/(" + time.strftime("%d-%m-%Y %H-%M-%S") + ")_KMeans" + ".pdf")
         plt.show()
+
     return new_X, km2
+
+def dbscan_for_periodic_data(X, path, threshold = 0.3, figures=""):
+    L = math.pi * 2
+    for d in range(1,3):
+        # all 1-d distances
+        pd = pdist(X[:, d].reshape(len(X), 1))
+        pd[pd > L * 0.5] -= L
+        try:
+            total += pd ** 2
+        except:
+            total = pd ** 2
+    # transform the condensed distance matrix...into a square distance matrix
+    total = pl.sqrt(total)
+    square = squareform(total)
+
+    db2 = DBSCAN(eps=threshold, metric='precomputed').fit(square)
+    plt.figure(figsize=(13, 13), dpi=60)
+    plt.scatter(X[:, 1], X[:, 2], c=db2.labels_, s=100)
+
+    plt.title('Algorytm DBSCAN, eps=0.1', fontsize=30)
+    plt.xlabel('phi', fontsize=30)
+    plt.xticks(fontsize=30)
+    plt.ylabel('psi', fontsize=30)
+    plt.yticks(fontsize=30)
+
+    if figures == 'y':
+        plt.savefig(path + "/(" + time.strftime("%d-%m-%Y %H-%M-%S") + ")_DBSCAN" + ".pdf")
+        plt.show()
 
 def plot_voronoi_for_clusters(new_X, km):
     v_cluters = Voronoi(km.cluster_centers_[:, 0:2])
@@ -233,14 +235,9 @@ def plot_voronoi_for_clusters(new_X, km):
     plt.show()
 
 # modified roulette selection //++ t_weight = np.power(t_weight, 0.0001)
-def sample_clusters(n_sample, weights, n_landmark):
-    # print("weights", weights)
-    # print("t_weight", sum(weights))
-
+def sample_clusters(n_sample, weights, n_landmark, opt):
     t_weight = sum(weights)
-    # print("t_weight", t_weight)
-    # t_weight = np.power(t_weight, 0.0001)
-    # print("t_weight", t_weight)
+    t_weight = np.power(t_weight, opt)
 
     running_t_weight = 0
     landmark_indices = []
@@ -263,35 +260,10 @@ def sample_clusters(n_sample, weights, n_landmark):
         n_count += 1
     return landmark_indices
 
-def sample_points(n_sample, logweight_tensor, n_landmark, clust_points):
-    t_weight = sum(np.exp(logweight_tensor))
-    # t_weight = np.power(t_weight, 0.0001)
-
-    running_t_weight = 0
-    landmark_indices = []
-    selected = np.full(n_sample, False, dtype=bool)
-
-    n_count = 0
-    while n_count < n_landmark:
-        tw = 0
-        r01 = np.random.rand()
-        r = (t_weight - running_t_weight) * r01
-
-        for j in range(n_sample):
-            if selected[j] == False:
-                tw += np.exp(logweight_tensor[j])
-                if r < tw:
-                    selected[j] = True
-                    landmark_indices.append(clust_points[j, 0])
-                    running_t_weight += np.exp(logweight_tensor[j])
-                    break
-        n_count += 1
-    return landmark_indices
-
-def sample_inside_clusters(X, n_clusters, sum_of_clust, pick_n_samples):
+def sample_inside_clusters(X, n_clusters, sum_of_clust, pick_n_samples, opt):
 
     # wybor klastra
-    sampled_clust_ndx = sample_clusters(n_clusters, sum_of_clust, 1)
+    sampled_clust_ndx = sample_clusters(n_clusters, sum_of_clust, 1, 1)
     sampled_clust_ndx = np.unique(X[:, 4])[sampled_clust_ndx]
     print("Wybrano klaser nr: ", sampled_clust_ndx)
     clust_points = X[np.where(X[:, 4] == sampled_clust_ndx)]  # punkty nalezace do wybranego klastra
@@ -299,7 +271,7 @@ def sample_inside_clusters(X, n_clusters, sum_of_clust, pick_n_samples):
 
     # wybor punktow z klastra
     logweight_tensor = clust_points[:, 3].tolist()
-    ndx = sample_points(len(clust_points), logweight_tensor, pick_n_samples, clust_points)
+    ndx = roulette_selection(len(clust_points), logweight_tensor, pick_n_samples, 1, clust_points)
 
     indexes = []
     indexes.extend(np.unique(ndx))
@@ -310,22 +282,43 @@ def sample_inside_clusters(X, n_clusters, sum_of_clust, pick_n_samples):
     s_X = np.unique([tuple(row) for row in sampled_X], axis=0) #gdy wystepuja zdublowane wiersze
     return s_X, indexes
 
-def plot_hist_2D(new_X):
+def plot_hist_1D(X, path):
+    plt.hist(X[:, 1], bins=100, alpha=0.5, density=True, label=len(X))
 
-    fig, ax = plt.subplots(figsize=(10, 10))
-    ax.set_title('Histogram of sampled data ({} clusters) - 2D dataset'.format(len(new_X)))
-    ax.set_xlabel('phi')
-    ax.set_ylabel('psi')
+    plt.title('Histogram danych 1D - {} próbek'.format(len(X)), fontsize=16)
+    plt.xlabel('x', fontsize=14)
+    plt.ylabel('P(x)', fontsize=14)
+    plt.xlim([0, 10])
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.legend(loc='upper right', fontsize=14)
 
-    plt.hist2d(new_X[:, 1], new_X[:, 2], bins=(50, 50), cmap=plt.cm.jet, label=len(new_X))
-    plt.colorbar()
+    plt.savefig(path + "/(" + time.strftime("%d-%m-%Y %H-%M-%S") + ")_hist_1D_" + str(len(X)) + "_próbek" + ".pdf")
     plt.show()
 
-# hist X - whole set, hist A - sampled set
-def kl_divergence(HX, HA):
+def plot_hist_2D(X, path):
+    plt.figure(figsize=(10, 8))
+    plt.hist2d(X[:, 1], X[:, 2], bins=(50, 50), cmap=plt.cm.jet, label=len(X))
+
+    plt.title('Histogram danych 2D - {} próbek'.format(len(X)), fontsize=16)
+    plt.xlabel('phi', fontsize=14)
+    plt.ylabel('psi', fontsize=14)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+
+    cbar = plt.colorbar()
+    cbar.ax.tick_params(labelsize=12)
+    cbar.set_label(label='logarytm wagi', size=14)
+    for t in cbar.ax.get_yticklabels():
+        t.set_fontsize(12)
+
+    plt.savefig(path + "/(" + time.strftime("%d-%m-%Y %H-%M-%S") + ")_hist_2D_" + str(len(X)) + "_próbek" + ".pdf")
+    plt.show()
+
+def kl_divergence_2D(HX, HA):
     epsilon = 0.0001
-    X = HX + epsilon
-    A = HA + epsilon
+    X = HX + epsilon #whole set
+    A = HA + epsilon #sampled set
 
     s = 0
     d = []
@@ -334,10 +327,6 @@ def kl_divergence(HX, HA):
             temp = X[i][j] * log(X[i][j]/A[i][j])
             d.append(temp)
             s += temp
-    # print(d)
-    # print(sum(d))
-
-    # import matplotlib.pyplot as plt
     # plt.plot(d)
     # plt.show()
     return s
@@ -364,7 +353,7 @@ def calc_KL_for_many_sets(X):
         # plt.show()
 
         # (X || A)
-        kl = kl_divergence(H, H2)
+        kl = kl_divergence_2D(H, H2)
         print('KL(X || A=', len(A), '):', kl)
         sizeA.append(len(A))
         KL.append(kl)
@@ -386,30 +375,13 @@ def calc_KL_for_one_set(X, A):
     H = H.T
     H = H/max(map(max, H))
 
-    # figure = plt.figure(figsize=(10, 10))
-    # axes = figure.add_subplot(111)
-    # axes.set_title('Histogram of sampled data ({}) - 2D dataset'.format(len(X)))
-    # # axes.set_xlim([-4, 4])
-    # # axes.set_ylim([-4, 4])
-    # caxes = axes.matshow(H, interpolation='nearest')
-    # figure.colorbar(caxes)
-
-    # plt.show()
-
-
     H2, xedges, yedges = np.histogram2d(A[:, 1], A[:, 2], bins=(100, 100))
     H2 = H2.T
     H2 = H2 / max(map(max, H2))
-    # figure = plt.figure(figsize=(10, 10))
-    # axes = figure.add_subplot(111)
-    # axes.set_title('Histogram of sampled data ({}) - 2D dataset'.format(len(A)))
-    # c2axes = axes.matshow(H2, interpolation='nearest')
-    # figure.colorbar(c2axes)
-    # plt.show()
 
     # (X || A)
-    kl = kl_divergence(H, H2)/len(A)
-    print('KL(X || A=', len(A), '):', kl)
+    kl = kl_divergence_2D(H, H2)/len(A)
+    print('KL(X || (A =', len(A), ') ):', kl)
 
     return kl
 
@@ -443,19 +415,23 @@ def show_picked_clust(new_X,sampled_clust_ndx):
     plt.show()
 
 def overlay_plots(X, sampled_X, lenX, counter, path):
-    fig, ax = plt.subplots(figsize=(10, 10))
-    ax.set_title('Whole set (blue) %d vs sampled set (red) %d' % (lenX, len(sampled_X)))
-    ax.set_xlabel('phi')
-    ax.set_ylabel('psi')
+    plt.figure(figsize=(8, 8))
     plt.scatter(X[:, 1], X[:, 2], c='b', alpha=0.1)
     plt.scatter(sampled_X[:, 1], sampled_X[:, 2], c='r', alpha=1)
+
+    plt.title('Cały zbiór %d próbek (niebieski) vs %d próbek (czerwony)' % (lenX, len(sampled_X)), fontsize=16)
+    plt.xlabel('phi', fontsize=14)
+    plt.ylabel('psi', fontsize=14)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+
+    plt.savefig(path + "/(" + time.strftime("%d-%m-%Y %H-%M-%S") + ") " + str(counter) + " .pdf")
     plt.show()
-    fig.savefig(path + "/Figure " + " (" + time.strftime("%d-%m-%Y %H-%M-%S") + ") " + str(counter) + " .png")
 
 def kl_divergence_1D(HX, HA):
     epsilon = 0.0001
-    X = HX + epsilon
-    A = HA + epsilon
+    X = HX + epsilon #whole set
+    A = HA + epsilon #sampled set
 
     s = 0
     d = []
@@ -463,45 +439,44 @@ def kl_divergence_1D(HX, HA):
         temp = X[i] * log(X[i]/A[i])
         d.append(temp)
         s += temp
-    print(d)
-    print(sum(d))
-    import matplotlib.pyplot as plt
     plt.plot(d)
     # plt.show()
     return s
 
-def calc_KL_for_one_1Dset(X, A):
+def calc_KL_1D(X, A):
     H, bins = np.histogram(X[:, 1], bins=10)
-    print(H)
     H = H / H.max()
-    print(len(X))
-    print(min(X[:, 1]))
-    print(max(X[:, 1]))
 
     H2, bins = np.histogram(A[:, 1], bins=10)
     H2 = H2/H2.max()
-    print(H2)
-    print(len(A))
-    print(min(A[:, 1]))
-    print(max(A[:, 1]))
-    print()
-    print()
 
     # (X || A)
     kl = kl_divergence_1D(H, H2)
-    print('KL(X || A=', len(A), '):', kl)
+    print('KL(X || (A =', len(A), ') ):', kl)
     return kl
 
 def sort_arr_by_index(X):
     return X[X[:, 0].argsort()]
 
+def plot_KL_divergence(sizeA, KL, path):
+    plt.figure(figsize=(10, 6))
+    plt.plot(sizeA, KL)
+    plt.title('Rozbieżność między całym zbiorem danych - X a jego próbą - A', fontsize=16)
+    plt.xlabel('Rozmiar zbioru A', fontsize=14)
+    plt.ylabel('KL(X || A)', fontsize=14)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+
+    plt.savefig(path + "/(" + time.strftime("%d-%m-%Y %H-%M-%S") + ")_KL_divergence_2D" + ".pdf")
+    plt.show()
+
 def main(argv):
-    sizeA = []
-    KL = []
+    # Zdefiniowanie argumentów programu
     parser = argparse.ArgumentParser(prog='landmark_sampling.py',
                                     usage='%(prog)s [-options]',
                                     description='DESCRIPTION: Program wybiera reprezentatywną próbkę dla podanego zbioru danych. Program przygotowany w ramach pracy magisterskiej: " Konstrukcja zestawu danych treningowych w uczeniu maszynowym: Landmark sampling". Domyślne wartości: -dataset 2 -size 3000 -n_clusters 10 -n_samples 200 -figures y -path outputs',
                                     epilog='Enjoy the program! :)')
+
     parser.add_argument('-dataset', default='2', help='opcja 1 lub 2 (1: zbiór jednowymiarowy, 2: zbiór dwuwymiarowy)')
     parser.add_argument('-size', default='3000', help='wielkość próbki')
     parser.add_argument('-n_clusters', default='10', help='ilość klastrów')
@@ -511,6 +486,7 @@ def main(argv):
     parser.add_argument('-opt', default='0.001', help='wartośc wykładnika - optymalizacja selekcji ruletki')
     args = vars(parser.parse_args())
 
+    # Wczytanie argumentów programu
     dataset = args['dataset']
     size = int(args['size'])
     n_clusters = int(args['n_clusters'])
@@ -522,67 +498,52 @@ def main(argv):
 
     if(dataset == '1'):
         X = read_data(1)
-        plt.hist(X[:, 1], bins=100, alpha=0.5, density=True, label=len(X))
-        plt.xlabel('Value')
-        plt.ylabel('Frequency')
-        plt.title('colvar-1D.data')
-        plt.xlim([0, 10])
-        plt.legend(loc='upper right')
-        plt.show()
+        if figures == 'y':
+            plot_hist_1D(X, path)
 
-        # A = get_rand_sample(X,1000)
-        # kl = calc_KL_for_one_1Dset(X,A)
-
-        # for k in range(1, 6, 2):
         pick_n_samples = size
-        ndx = random_sampling(len(X), X[:, 2], pick_n_samples, opt)
+        ndx = roulette_selection(len(X), X[:, 2], pick_n_samples, opt, np.array([]))
         ndx.sort()
-        A = np.empty(shape=[pick_n_samples, 3])
+        R = np.empty(shape=[pick_n_samples, 3]) # results array
         for i in range(len(ndx)):
-            A[i] = (X[ndx[i]])
-        plt.hist(A[:, 1], bins=100, alpha=0.5, density=True, label=pick_n_samples)
-        plt.xlabel('Value')
-        plt.ylabel('Frequency')
-        plt.title('colvar-1D.data')
-        plt.xlim([0, 10])
-        plt.legend(loc='upper right')
-        plt.show()
+            R[i] = (X[ndx[i]])
 
-        savetxt('results1.csv', A, delimiter='\t')
+        plot_hist_1D(R, path)
+        savetxt(path + "/zbiór_treningowy_1D_" + str(len(R)) + "_próbek" + ".csv", R, delimiter='\t')
 
-        # kl = calc_KL_for_one_1Dset(X, A)
-        # sizeA.append(len(A))
-        # KL.append(kl)
+        kl = calc_KL_1D(X, R)
 
-        # sizeA.append(len(X))
-        # KL.append(0.0)
-        # plt.plot(sizeA, KL)
-        # plt.show()
-
-    # argv: dane 2D, wielkość próbki, ile klastrow, max ilosc probek, wykresy, sciezka:
     elif(dataset == '2'):
         X = read_data(2)
 
+        if figures == 'y':
+            plot_hist_2D(X, path)
+
         A = get_rand_sample(X, 5000)
         # A = np.loadtxt("a_rand.csv")
+        X = A
 
         # -- KMEANS --
-        # k_means_elbow(A, 30)
-        new_X, km = k_means_per_and_nonper(A, n_clusters, figures)
-
+        if figures == 'y':
+            plot_k_means_elbow(X, path, 30)
+        new_X, km = k_means_for_periodic_data(X, path, n_clusters, figures)
         sum_of_clust = sum_wages_in_custers(new_X, n_clusters)
 
         result = np.empty((0, 5), float)
-        counter = 1 #used for counting figures - naming
+        counter = 1 # used for counting figures - naming
+
+        sizeA = []
+        KL = []
+
         while len(result) < size:
-            print("\n##POZOSTALO ", size-len(result), "\n")
+            print("\n##POZOSTALO ", size - len(result), "\n")
             NSAMPLES = n_samples
             if size - len(result) < n_samples:
-                NSAMPLES = size-len(result)
+                NSAMPLES = size - len(result)
             sum_of_clust = sum_wages_in_custers(new_X, n_clusters)
             sum_of_clust = sum_of_clust[sum_of_clust != 0]
 
-            sampled_X, indexes = sample_inside_clusters(new_X, n_clusters, sum_of_clust, NSAMPLES)
+            sampled_X, indexes = sample_inside_clusters(new_X, n_clusters, sum_of_clust, NSAMPLES, opt)
             r = np.vstack((result, sampled_X))
 
             result = np.unique([tuple(row) for row in r], axis=0)
@@ -597,23 +558,22 @@ def main(argv):
             print("DO TEJ PORY WYBRANO ", len(result), " PROBEK")
 
             if figures == 'y':
-                overlay_plots(new_X, result, len(A), counter, path)
-            kl = calc_KL_for_one_set(A, result)
+                overlay_plots(new_X, result, len(X), counter, path)
+
+            kl = calc_KL_for_one_set(X, result)
             sizeA.append(len(result))
             KL.append(kl)
+
             counter += 1
 
-        overlay_plots(A, result, len(A), counter, path)
-        savetxt('results2.csv', result, delimiter='\t')
+        overlay_plots(X, result, len(X), counter, path)
+        savetxt(path + "/zbiór_treningowy_2D_" + str(len(result)) + "_próbek" + ".csv", result, delimiter='\t')
 
-        sizeA.append(len(A))
+        plot_hist_2D(result, path)
+
+        sizeA.append(len(X))
         KL.append(0.0)
-        plt.plot(sizeA, KL)
-        plt.savefig(path + "/Figure " + " (" + time.strftime("%d-%m-%Y %H-%M-%S") + ") " + str(counter+1) + " .png")
-        plt.show()
-
-        #####
-        # calc_KL_for_many_sets(X)
+        plot_KL_divergence(sizeA, KL, path)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

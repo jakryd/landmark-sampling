@@ -4,6 +4,25 @@
     <list default="true" id="e871eaa6-d2d7-470f-be24-94e0b976e71a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-12-57) 1 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-12-59) 2 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-03) 3 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-07) 4 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-11) 5 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-14) 6 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-19) 7 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-24) 8 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-28) 9 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-34) 10 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-40) 11 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-45) 12 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-51) 13 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-56) 14 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-14-01) 15 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-14-05) 16 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-14-09) 17 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-14-11) 18 .png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/results2.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,8 +35,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main_old.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="38" column="23" selection-start-line="38" selection-end-line="39" />
+            <state relative-caret-position="750">
+              <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#117#761#0" />
@@ -29,36 +48,38 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="950">
-              <caret line="619" lean-forward="true" selection-start-line="619" selection-end-line="619" />
+            <state relative-caret-position="2625">
+              <caret line="579" selection-start-line="579" selection-end-line="579" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#496#826#0" />
-                <element signature="e#862#1102#0" />
-                <element signature="e#1134#1161#0" />
-                <element signature="e#1306#2032#0" />
-                <element signature="e#2062#2140#0" />
-                <element signature="e#2170#2519#0" />
-                <element signature="e#2554#2963#0" />
-                <element signature="e#2989#3463#0" />
-                <element signature="e#3510#4946#0" />
-                <element signature="e#4979#5330#0" />
-                <element signature="e#5369#5778#0" />
-                <element signature="e#5832#7079#0" />
-                <element signature="e#7127#7606#0" />
-                <element signature="e#7737#8561#0" />
-                <element signature="e#8640#9366#0" />
-                <element signature="e#9446#10331#0" />
-                <element signature="e#10363#10671#0" />
-                <element signature="e#10747#11111#0" />
-                <element signature="e#11147#12325#0" />
-                <element signature="e#12362#13300#0" />
-                <element signature="e#13347#13508#0" />
-                <element signature="e#13567#14005#0" />
-                <element signature="e#14059#14394#0" />
-                <element signature="e#14454#14877#0" />
-                <element signature="e#14913#15212#0" />
-                <element signature="e#15251#15667#0" />
+                <element signature="e#862#1042#0" />
+                <element signature="e#1074#1101#0" />
+                <element signature="e#1263#2129#0" />
+                <element signature="e#2159#2237#0" />
+                <element signature="e#2267#2616#0" />
+                <element signature="e#2651#3060#0" />
+                <element signature="e#3107#4069#0" />
+                <element signature="e#4114#4639#0" />
+                <element signature="e#4678#5087#0" />
+                <element signature="e#5150#6114#0" />
+                <element signature="e#6188#7036#0" />
+                <element signature="e#7084#7563#0" />
+                <element signature="e#7699#8379#0" />
+                <element signature="e#8464#9360#0" />
+                <element signature="e#9393#9863#0" />
+                <element signature="e#9896#10521#0" />
+                <element signature="e#10557#10871#0" />
+                <element signature="e#10907#12088#0" />
+                <element signature="e#12125#12472#0" />
+                <element signature="e#12519#12680#0" />
+                <element signature="e#12739#13177#0" />
+                <element signature="e#13231#13566#0" />
+                <element signature="e#13626#14123#0" />
+                <element signature="e#14159#14415#0" />
+                <element signature="e#14443#14680#0" />
+                <element signature="e#14712#14739#0" />
+                <element signature="e#14786#15188#0" />
               </folding>
             </state>
           </provider>
@@ -67,8 +88,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tmp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="97" selection-start-line="97" selection-end-line="97" />
+            <state relative-caret-position="400">
+              <caret line="59" column="7" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#304#634#0" />
@@ -154,6 +175,7 @@
       <find>-32.403495</find>
       <find>0.362823</find>
       <find>-12.638075</find>
+      <find>cał</find>
     </findStrings>
     <replaceStrings>
       <replace>gen_population1</replace>
@@ -185,6 +207,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -195,13 +218,17 @@
             <path>
               <item name="landmark-sampling" type="b2602c69:ProjectViewProjectNode" />
               <item name="landmark-sampling" type="462c0819:PsiDirectoryNode" />
+              <item name="outputs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="landmark-sampling" type="b2602c69:ProjectViewProjectNode" />
+              <item name="landmark-sampling" type="462c0819:PsiDirectoryNode" />
               <item name="wykresy" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -340,12 +367,12 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13435195" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20021075" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3488624" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26435536" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.20801733" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -363,8 +390,8 @@
     <entry file="file://$PROJECT_DIR$/colvar -2D.data" />
     <entry file="file://$PROJECT_DIR$/main_old.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="38" column="23" selection-start-line="38" selection-end-line="39" />
+        <state relative-caret-position="750">
+          <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#117#761#0" />
@@ -374,8 +401,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tmp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="97" selection-start-line="97" selection-end-line="97" />
+        <state relative-caret-position="400">
+          <caret line="59" column="7" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#304#634#0" />
@@ -433,36 +460,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="950">
-          <caret line="619" lean-forward="true" selection-start-line="619" selection-end-line="619" />
+        <state relative-caret-position="2625">
+          <caret line="579" selection-start-line="579" selection-end-line="579" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#496#826#0" />
-            <element signature="e#862#1102#0" />
-            <element signature="e#1134#1161#0" />
-            <element signature="e#1306#2032#0" />
-            <element signature="e#2062#2140#0" />
-            <element signature="e#2170#2519#0" />
-            <element signature="e#2554#2963#0" />
-            <element signature="e#2989#3463#0" />
-            <element signature="e#3510#4946#0" />
-            <element signature="e#4979#5330#0" />
-            <element signature="e#5369#5778#0" />
-            <element signature="e#5832#7079#0" />
-            <element signature="e#7127#7606#0" />
-            <element signature="e#7737#8561#0" />
-            <element signature="e#8640#9366#0" />
-            <element signature="e#9446#10331#0" />
-            <element signature="e#10363#10671#0" />
-            <element signature="e#10747#11111#0" />
-            <element signature="e#11147#12325#0" />
-            <element signature="e#12362#13300#0" />
-            <element signature="e#13347#13508#0" />
-            <element signature="e#13567#14005#0" />
-            <element signature="e#14059#14394#0" />
-            <element signature="e#14454#14877#0" />
-            <element signature="e#14913#15212#0" />
-            <element signature="e#15251#15667#0" />
+            <element signature="e#862#1042#0" />
+            <element signature="e#1074#1101#0" />
+            <element signature="e#1263#2129#0" />
+            <element signature="e#2159#2237#0" />
+            <element signature="e#2267#2616#0" />
+            <element signature="e#2651#3060#0" />
+            <element signature="e#3107#4069#0" />
+            <element signature="e#4114#4639#0" />
+            <element signature="e#4678#5087#0" />
+            <element signature="e#5150#6114#0" />
+            <element signature="e#6188#7036#0" />
+            <element signature="e#7084#7563#0" />
+            <element signature="e#7699#8379#0" />
+            <element signature="e#8464#9360#0" />
+            <element signature="e#9393#9863#0" />
+            <element signature="e#9896#10521#0" />
+            <element signature="e#10557#10871#0" />
+            <element signature="e#10907#12088#0" />
+            <element signature="e#12125#12472#0" />
+            <element signature="e#12519#12680#0" />
+            <element signature="e#12739#13177#0" />
+            <element signature="e#13231#13566#0" />
+            <element signature="e#13626#14123#0" />
+            <element signature="e#14159#14415#0" />
+            <element signature="e#14443#14680#0" />
+            <element signature="e#14712#14739#0" />
+            <element signature="e#14786#15188#0" />
           </folding>
         </state>
       </provider>
