@@ -4,25 +4,33 @@
     <list default="true" id="e871eaa6-d2d7-470f-be24-94e0b976e71a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-12-57) 1 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-12-59) 2 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-03) 3 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-07) 4 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-11) 5 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-14) 6 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-19) 7 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-24) 8 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-28) 9 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-34) 10 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-40) 11 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-45) 12 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-51) 13 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-13-56) 14 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-14-01) 15 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-14-05) 16 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-14-09) 17 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Figure  (27-09-2022 02-14-11) 18 .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/results2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_old.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-49-37)_hist_2D_80001_próbek.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-49-59)_elbow.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-50-37)_KMeans.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-50-47) 1 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-50-50) 2 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-50-58) 3 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-02) 4 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-18) 5 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-20) 6 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-22) 7 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-23) 8 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-25) 9 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-27) 10 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-28) 11 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-30) 12 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-32) 13 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-34) 14 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-36) 15 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-37) 16 .pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-38)_hist_2D_3000_próbek.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/(14-11-2022 17-51-42)_KL_divergence_2D.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/zbiór_treningowy_2D_3000_próbek.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sampling_clusters.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vor_clust.ipynb" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,99 +40,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main_old.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="750">
-              <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-                <element signature="e#117#761#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2625">
-              <caret line="579" selection-start-line="579" selection-end-line="579" />
+            <state relative-caret-position="350">
+              <caret line="462" column="46" selection-start-line="462" selection-start-column="46" selection-end-line="462" selection-end-column="46" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#496#826#0" />
                 <element signature="e#862#1042#0" />
-                <element signature="e#1074#1101#0" />
-                <element signature="e#1263#2129#0" />
-                <element signature="e#2159#2237#0" />
-                <element signature="e#2267#2616#0" />
-                <element signature="e#2651#3060#0" />
-                <element signature="e#3107#4069#0" />
-                <element signature="e#4114#4639#0" />
-                <element signature="e#4678#5087#0" />
-                <element signature="e#5150#6114#0" />
-                <element signature="e#6188#7036#0" />
-                <element signature="e#7084#7563#0" />
-                <element signature="e#7699#8379#0" />
-                <element signature="e#8464#9360#0" />
-                <element signature="e#9393#9863#0" />
-                <element signature="e#9896#10521#0" />
-                <element signature="e#10557#10871#0" />
-                <element signature="e#10907#12088#0" />
-                <element signature="e#12125#12472#0" />
-                <element signature="e#12519#12680#0" />
-                <element signature="e#12739#13177#0" />
-                <element signature="e#13231#13566#0" />
-                <element signature="e#13626#14123#0" />
-                <element signature="e#14159#14415#0" />
-                <element signature="e#14443#14680#0" />
-                <element signature="e#14712#14739#0" />
-                <element signature="e#14786#15188#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tmp.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="59" column="7" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#304#634#0" />
-                <element signature="e#774#1418#0" />
-                <element signature="e#1448#1526#0" />
-                <element signature="e#1556#1898#0" />
-                <element signature="e#1933#2335#0" />
-                <element signature="e#2361#2802#0" />
-                <element signature="e#2836#3741#0" />
-                <element signature="e#3789#4268#0" />
-                <element signature="e#4398#5005#0" />
-                <element signature="e#5063#5581#0" />
-                <element signature="e#5662#6324#0" />
-                <element signature="e#6397#7464#0" />
-                <element signature="e#7496#7804#0" />
-                <element signature="e#7823#8740#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vor_clust.ipynb">
-          <provider selected="true" editor-type-id="ipnb-editor">
-            <state>
-              <selected id="0" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sampling_clusters.ipynb">
-          <provider selected="true" editor-type-id="ipnb-editor">
-            <state>
-              <selected id="0" />
             </state>
           </provider>
         </entry>
@@ -176,6 +101,26 @@
       <find>0.362823</find>
       <find>-12.638075</find>
       <find>cał</find>
+      <find>max</find>
+      <find>plot_hist</find>
+      <find>get_rand_sample</find>
+      <find>sort_arr_by_index</find>
+      <find>roulette_selection</find>
+      <find>normalize_wages</find>
+      <find>plot_voronoi_diagram</find>
+      <find>k_means_stara_wersja</find>
+      <find>plot_k_means_elbow</find>
+      <find>get_centroids</find>
+      <find>calc_KL_for_one_set</find>
+      <find>plot</find>
+      <find>phi</find>
+      <find>psi</find>
+      <find>title</find>
+      <find>xticks</find>
+      <find>legend</find>
+      <find>over</find>
+      <find>pró</find>
+      <find>overlay_plots</find>
     </findStrings>
     <replaceStrings>
       <replace>gen_population1</replace>
@@ -366,13 +311,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20021075" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14120126" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26435536" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.19501625" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.20801733" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -388,21 +334,24 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/colvar -2D.data" />
-    <entry file="file://$PROJECT_DIR$/main_old.py">
+    <entry file="file://$PROJECT_DIR$/colvar-1D.data">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#117#761#0" />
-          </folding>
+        <state relative-caret-position="143750">
+          <caret line="5750" column="17" selection-start-line="5750" selection-start-column="17" selection-end-line="5750" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/colvar-2D.data">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="175">
+          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tmp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="59" column="7" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
+        <state relative-caret-position="50">
+          <caret line="59" column="7" selection-end-line="291" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#304#634#0" />
@@ -423,7 +372,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vor_clust.ipynb">
+    <entry file="file://$PROJECT_DIR$/main_old.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#117#761#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
           <selected id="0" />
@@ -437,61 +397,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data.ipynb">
+    <entry file="file://$PROJECT_DIR$/vor_clust.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
           <selected id="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/colvar-1D.data">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143750">
-          <caret line="5750" column="17" selection-start-line="5750" selection-start-column="17" selection-end-line="5750" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/colvar-2D.data">
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state relative-caret-position="175">
-          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2625">
-          <caret line="579" selection-start-line="579" selection-end-line="579" />
+        <state relative-caret-position="350">
+          <caret line="462" column="46" selection-start-line="462" selection-start-column="46" selection-end-line="462" selection-end-column="46" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#496#826#0" />
             <element signature="e#862#1042#0" />
-            <element signature="e#1074#1101#0" />
-            <element signature="e#1263#2129#0" />
-            <element signature="e#2159#2237#0" />
-            <element signature="e#2267#2616#0" />
-            <element signature="e#2651#3060#0" />
-            <element signature="e#3107#4069#0" />
-            <element signature="e#4114#4639#0" />
-            <element signature="e#4678#5087#0" />
-            <element signature="e#5150#6114#0" />
-            <element signature="e#6188#7036#0" />
-            <element signature="e#7084#7563#0" />
-            <element signature="e#7699#8379#0" />
-            <element signature="e#8464#9360#0" />
-            <element signature="e#9393#9863#0" />
-            <element signature="e#9896#10521#0" />
-            <element signature="e#10557#10871#0" />
-            <element signature="e#10907#12088#0" />
-            <element signature="e#12125#12472#0" />
-            <element signature="e#12519#12680#0" />
-            <element signature="e#12739#13177#0" />
-            <element signature="e#13231#13566#0" />
-            <element signature="e#13626#14123#0" />
-            <element signature="e#14159#14415#0" />
-            <element signature="e#14443#14680#0" />
-            <element signature="e#14712#14739#0" />
-            <element signature="e#14786#15188#0" />
           </folding>
         </state>
       </provider>
